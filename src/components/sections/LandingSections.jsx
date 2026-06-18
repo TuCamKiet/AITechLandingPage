@@ -8,9 +8,9 @@ export default function LandingSections({
   activeShowcase,
   setActiveShowcase,
   features,
-  testimonials,
-  activeTestimonial,
-  setActiveTestimonial,
+  previews,
+  activePreview,
+  setActivePreview,
   integrations,
   pricing,
   annualBilling,
@@ -243,22 +243,21 @@ export default function LandingSections({
           <div className="flex gap-2">
             <button
               onClick={() =>
-                setActiveTestimonial(
-                  (prev) =>
-                    (prev - 1 + testimonials.length) % testimonials.length,
+                setActivePreview(
+                  (prev) => (prev - 1 + previews.length) % previews.length,
                 )
               }
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
-              aria-label="Previous testimonial"
+              aria-label="Previous preview"
             >
               <FaArrowLeft />
             </button>
             <button
               onClick={() =>
-                setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
+                setActivePreview((prev) => (prev + 1) % previews.length)
               }
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
-              aria-label="Next testimonial"
+              aria-label="Next preview"
             >
               <FaArrowRight />
             </button>
@@ -268,9 +267,9 @@ export default function LandingSections({
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+            style={{ transform: `translateX(-${activePreview * 100}%)` }}
           >
-            {testimonials.map((item) => (
+            {previews.map((item) => (
               <article
                 key={item.author}
                 className="min-w-full rounded-xl border border-slate-800 bg-slate-950/50 p-8"
@@ -286,11 +285,11 @@ export default function LandingSections({
         </div>
 
         <div className="mt-4 flex justify-center gap-2">
-          {testimonials.map((item, index) => (
+          {previews.map((item, index) => (
             <button
               key={item.author}
-              onClick={() => setActiveTestimonial(index)}
-              className={`h-2.5 rounded-full transition-all ${activeTestimonial === index ? "w-8 bg-violet-400" : "w-2.5 bg-slate-600"}`}
+              onClick={() => setActivePreview(index)}
+              className={`h-2.5 rounded-full transition-all ${activePreview === index ? "w-8 bg-violet-400" : "w-2.5 bg-slate-600"}`}
             />
           ))}
         </div>

@@ -12,7 +12,7 @@ import {
   showcases,
   stats,
   team,
-  testimonials,
+  previews,
   workflowSteps,
 } from "./data/landingData";
 import { useAutoRotate } from "./hooks/useAutoRotate";
@@ -23,12 +23,12 @@ function App() {
   const [annualBilling, setAnnualBilling] = useState(true);
   const [openFaq, setOpenFaq] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activePreview, setActivePreview] = useState(0);
   const [activeShowcase, setActiveShowcase] = useState(0);
 
   useRevealOnScroll();
   const { isScrolled, showTopButton } = useScrollState();
-  useAutoRotate(setActiveTestimonial, testimonials.length, 4500);
+  useAutoRotate(setActivePreview, previews.length, 4500);
   useAutoRotate(setActiveShowcase, showcases.length, 3600);
 
   return (
@@ -53,9 +53,9 @@ function App() {
           activeShowcase={activeShowcase}
           setActiveShowcase={setActiveShowcase}
           features={features}
-          testimonials={testimonials}
-          activeTestimonial={activeTestimonial}
-          setActiveTestimonial={setActiveTestimonial}
+          previews={previews}
+          activePreview={activePreview}
+          setActivePreview={setActivePreview}
           integrations={integrations}
           pricing={pricing}
           annualBilling={annualBilling}

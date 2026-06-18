@@ -119,7 +119,7 @@ export const integrations = [
   { name: "AWS Cloud", icon: FaAws },
 ];
 
-export const testimonials = [
+export const previews = [
   {
     quote:
       "The AI tutor helped our students grasp complex calculus concepts at 2 AM. Our class average went up by a full letter grade.",
