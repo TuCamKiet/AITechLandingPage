@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.landing_service import LandingService
+from app.services.landing_service.landing_service import LandingService
 
 router = APIRouter(
     prefix="/landing",

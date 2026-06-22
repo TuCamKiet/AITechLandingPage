@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+from typing import List, Optional
 class Pricing(BaseModel):
     tier: str
     monthly: str

@@ -1,6 +1,15 @@
 from pydantic import BaseModel
-from typing import List, Optional
-import stat_schema, feature_schema, service_schema,showcase_schema,preview_schema,pricing_schema, teammenber_schema, integration_schema,fap_schema,workflowstep_schema
+from typing import List
+from stat_schema import Stat
+from feature_schema import Feature
+from service_schema import Service
+from showcase_schema import Showcase
+from preview_schema import Preview
+from pricing_schema import Pricing
+from workflowstep_schema import WorkflowStep
+from integration_schema import Integration
+from backend.app.schemas.landing_schema.faq_schema import FAQ
+from teammenber_schema import TeamMember
 
 class LandingResponse(BaseModel):
     stats: List[Stat]

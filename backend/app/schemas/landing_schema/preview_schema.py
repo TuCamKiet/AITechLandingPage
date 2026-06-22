@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 class Preview(BaseModel):
     quote: str
     author: str

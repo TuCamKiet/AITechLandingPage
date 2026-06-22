@@ -1,5 +1,4 @@
-landing_data = {
-    "stats": [
+stats= [
         {
             "label": "Active Students Taught",
             "value": "250K+"
@@ -16,9 +15,9 @@ landing_data = {
             "label": "Partner Schools",
             "value": "120+"
         }
-    ],
+    ]
 
-    "features": [
+features= [
         {
             "icon": "FaBrain",
             "title": "Personalized Learning Paths",
@@ -37,9 +36,9 @@ landing_data = {
             "description":
                 "Enterprise-grade security."
         }
-    ],
+    ]
     
-    "services": [
+services= [
         {
             "icon": "FaRobot",
             "name": "24/7 AI Teaching Assistant",
@@ -55,9 +54,9 @@ landing_data = {
             "name": "Intervention Intelligence",
             "summary":"Predict which students are at risk of falling behind before they fail a test, allowing for proactive intervention."
         },
-    ],
+    ]
 
-     "showcases": [
+showcases= [
         {
             "icon": "FaCloud",
             "title": "Educator Dashboard",
@@ -76,9 +75,9 @@ landing_data = {
             "description": "Pinpoint the exact underlying concepts a student is missing and automatically generate targeted practice problems.",
             "metric": "+40% retention"
         }
-    ],
+    ]
 
-    "workflowSteps": [
+workflowSteps = [
         {
             "step": "01",
             "title": "Curriculum Ingestion",
@@ -94,9 +93,9 @@ landing_data = {
             "title": "Learn, Adapt, & Improve",
             "detail": "As students interact, the platform identifies common stumbling blocks and suggests curriculum improvements to the educator."
         }
-    ],
+    ]
 
-    "integrations": [
+integrations= [
         {
             "name": "Zalo",
             "icon": "SiZalo"
@@ -129,9 +128,9 @@ landing_data = {
             "name": "AWS Cloud",
             "icon": "FaAws"
         }
-    ],
+    ]
 
-    "previews": [
+previews= [
         {
             "quote": "The AI tutor helped our students grasp complex calculus concepts at 2 AM. Our class average went up by a full letter grade.",
             "author": "Prof. Maya Rios",
@@ -147,9 +146,9 @@ landing_data = {
             "author": "Sana Idris",
             "role": "Director of Education, ApexCode"
         }
-    ],
+    ]
 
-    "pricing": [
+pricing= [
         {
             "tier": "Educator",
             "monthly": "$29",
@@ -186,9 +185,9 @@ landing_data = {
             ],
             "popular": False
         }
-    ],
+]
 
-    "faqs": [
+faqs= [
         {
             "q": "How long does it take the AI to learn my syllabus?",
             "a": "Usually under 24 hours. Simply upload your PDFs, slide decks, and reading materials, and the AI models itself around your content."
@@ -201,9 +200,9 @@ landing_data = {
             "q": "Will the AI give students the answers to tests?",
             "a": "No. You can configure the AI's guardrails to act strictly as a Socratic tutor—guiding students to the answer without doing the work for them."
         }
-    ],
+]
 
-    "team": [
+teams= [
         {
             "name": "Reza MK",
             "role": "CEO & Former Educator"
@@ -216,5 +215,4 @@ landing_data = {
             "name": "Soheil MV",
             "role": "Head of Curriculum Design"
         }
-    ]
-}
+]
