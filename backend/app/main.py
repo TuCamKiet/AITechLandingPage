@@ -39,7 +39,6 @@ app.add_middleware(
 app.include_router(landing_router)
 app.include_router(stat_router)
 app.include_router(service_router)
-app.include_router(service_router)
 app.include_router(faq_router)
 app.include_router(feature_router)
 app.include_router(pricing_router)
