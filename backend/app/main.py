@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from contextlib import asynccontextmanager
+from app.database.database import test_connection
+
 from app.api.landing_api.landing_api import router as landing_router
 from app.api.landing_api.stat_api import router as stat_router
 from app.api.landing_api.service_api import router as service_router
@@ -13,8 +16,15 @@ from app.api.landing_api.showcase_api import router as showcase_router
 from app.api.landing_api.teammember_api import router as teammember_router
 from app.api.landing_api.workflowstep_api import router as workflowstep_router
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    test_connection()
+    yield
+    print("Database connection closed")
+
 app = FastAPI(
     title="AITeach API",
+    lifespan=lifespan,
     version="1.0.0"
 )
 
