@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getLandingData } from "../api/landingApi";
-
 import {
   FaAws,
   FaBolt,
@@ -26,8 +25,6 @@ const iconMap = {
   FaSalesforce,
   FaHubspot,
   FaAws,
-
-  // các icon khác nếu có
   FaBolt,
   FaBrain,
   FaChartLine,
@@ -37,6 +34,7 @@ const iconMap = {
 
 export const useLandingData = () => {
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,13 +64,14 @@ export const useLandingData = () => {
         setData(transformedData);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);  
       }
     };
 
     fetchData();
   }, []);
 
-  console.log(data);
-
-  return data;
+   
+  return { data, isLoading };
 };

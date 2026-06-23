@@ -3,27 +3,15 @@ import BackToTopButton from "./components/common/BackToTopButton";
 import SiteFooter from "./components/layout/SiteFooter";
 import SiteHeader from "./components/layout/SiteHeader";
 import LandingSections from "./components/sections/LandingSections";
-// import {
-//   faqs,
-//   features,
-//   integrations,
-//   pricing,
-//   services,
-//   showcases,
-//   stats,
-//   team,
-//   previews,
-//   workflowSteps,
-// } from "./data/landingData";
 
 import { useLandingData } from "./hooks/useLandingData";
-
 import { useAutoRotate } from "./hooks/useAutoRotate";
 import { useRevealOnScroll } from "./hooks/useRevealOnScroll";
 import { useScrollState } from "./hooks/useScrollState";
 
 function App() {
-  //new
+  const { data, isLoading } = useLandingData();
+
   const {
     faqs = [],
     features = [],
@@ -35,8 +23,7 @@ function App() {
     team = [],
     previews = [],
     workflowSteps = [],
-  } = useLandingData() || {};
-  //new
+  } = data || {};
 
   const [annualBilling, setAnnualBilling] = useState(true);
   const [openFaq, setOpenFaq] = useState(0);
@@ -64,6 +51,7 @@ function App() {
         />
 
         <LandingSections
+          isLoading={isLoading}
           stats={stats}
           workflowSteps={workflowSteps}
           services={services}

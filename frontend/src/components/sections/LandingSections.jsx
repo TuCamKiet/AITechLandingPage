@@ -1,6 +1,8 @@
 import { FaArrowLeft, FaArrowRight, FaCheckCircle } from "react-icons/fa";
+import SkeletonSpinner from "../common/SkeletonSpinner";
 
 export default function LandingSections({
+  isLoading,
   stats,
   workflowSteps,
   services,
@@ -48,20 +50,25 @@ export default function LandingSections({
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {stats.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl border border-slate-800 bg-slate-900/40 p-3 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40"
-              >
-                <p className="text-xl font-bold text-violet-300">
-                  {item.value}
-                </p>
-                <p className="text-xl text-slate-400">{item.label}</p>
-              </div>
-            ))}
+            {isLoading ? (
+              <SkeletonSpinner />
+            ) : (
+              stats.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-slate-800 bg-slate-900/40 p-3 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40"
+                >
+                  <p className="text-xl font-bold text-violet-300">
+                    {item.value}
+                  </p>
+                  <p className="text-xl text-slate-400">{item.label}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
+        {/* Cột hiển thị tính năng cố định không cần loading spinner vì nó là tĩnh */}
         <div className="relative rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-2xl shadow-violet-500/10">
           <div className="absolute -inset-0.5 -z-10 rounded-2xl bg-linear-to-r from-violet-500/15 to-white/10 blur-md" />
           <div className="mb-6 flex items-center justify-between">
@@ -87,6 +94,7 @@ export default function LandingSections({
         </div>
       </section>
 
+      {/* Trusted By section is mostly static in your code, keeping as is */}
       <section data-reveal className="reveal-up">
         <div className="mb-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest text-slate-400">
           <span>Trusted by</span>
@@ -115,18 +123,22 @@ export default function LandingSections({
           How We Launch Your Custom Tutor
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
-          {workflowSteps.map((item) => (
-            <article
-              key={item.step}
-              className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40"
-            >
-              <p className="mb-3 text-sm font-semibold tracking-widest text-violet-300">
-                {item.step}
-              </p>
-              <h3 className="mb-3 text-xl font-semibold">{item.title}</h3>
-              <p className="text-slate-300">{item.detail}</p>
-            </article>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            workflowSteps.map((item) => (
+              <article
+                key={item.step}
+                className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40"
+              >
+                <p className="mb-3 text-sm font-semibold tracking-widest text-violet-300">
+                  {item.step}
+                </p>
+                <h3 className="mb-3 text-xl font-semibold">{item.title}</h3>
+                <p className="text-slate-300">{item.detail}</p>
+              </article>
+            ))
+          )}
         </div>
       </section>
 
@@ -135,16 +147,22 @@ export default function LandingSections({
           AITeach Products & Services
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
-          {services.map((service) => (
-            <article
-              key={service.name}
-              className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10"
-            >
-              <service.icon className="mb-3 text-xl text-violet-300" />
-              <h3 className="mb-3 text-xl font-semibold">{service.name}</h3>
-              <p className="text-slate-300">{service.summary}</p>
-            </article>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            services.map((service) => (
+              <article
+                key={service.name}
+                className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10"
+              >
+                {service.icon && (
+                  <service.icon className="mb-3 text-xl text-violet-300" />
+                )}
+                <h3 className="mb-3 text-xl font-semibold">{service.name}</h3>
+                <p className="text-slate-300">{service.summary}</p>
+              </article>
+            ))
+          )}
         </div>
       </section>
 
@@ -163,8 +181,9 @@ export default function LandingSections({
                   (prev) => (prev - 1 + showcases.length) % showcases.length,
                 )
               }
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400 disabled:opacity-50"
               aria-label="Previous slide"
+              disabled={isLoading}
             >
               <FaArrowLeft />
             </button>
@@ -172,46 +191,59 @@ export default function LandingSections({
               onClick={() =>
                 setActiveShowcase((prev) => (prev + 1) % showcases.length)
               }
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400 disabled:opacity-50"
               aria-label="Next slide"
+              disabled={isLoading}
             >
               <FaArrowRight />
             </button>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-slate-800">
-          <div
-            className="flex transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${activeShowcase * 100}%)` }}
-          >
-            {showcases.map((item) => (
-              <article
-                key={item.title}
-                className="min-w-full bg-linear-to-br from-slate-900 to-slate-950 p-8"
-              >
-                <p className="mb-3 inline-flex rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 text-xs text-violet-300">
-                  {item.metric}
-                </p>
-                <item.icon className="mb-4 text-2xl text-violet-300" />
-                <h3 className="mb-3 text-2xl font-semibold text-violet-200">
-                  {item.title}
-                </h3>
-                <p className="max-w-2xl text-slate-300">{item.description}</p>
-              </article>
-            ))}
-          </div>
+        <div className="overflow-hidden rounded-xl border border-slate-800 min-h-[300px]">
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            <div
+              className="flex transition-transform duration-700 ease-out h-full"
+              style={{ transform: `translateX(-${activeShowcase * 100}%)` }}
+            >
+              {showcases.map((item) => (
+                <article
+                  key={item.title}
+                  className="min-w-full bg-linear-to-br from-slate-900 to-slate-950 p-8"
+                >
+                  <p className="mb-3 inline-flex rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 text-xs text-violet-300">
+                    {item.metric}
+                  </p>
+                  {item.icon && (
+                    <item.icon className="mb-4 text-2xl text-violet-300" />
+                  )}
+                  <h3 className="mb-3 text-2xl font-semibold text-violet-200">
+                    {item.title}
+                  </h3>
+                  <p className="max-w-2xl text-slate-300">{item.description}</p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="mt-4 flex justify-center gap-2">
-          {showcases.map((item, index) => (
-            <button
-              key={item.title}
-              onClick={() => setActiveShowcase(index)}
-              className={`h-2.5 rounded-full transition-all ${activeShowcase === index ? "w-8 bg-violet-400" : "w-2.5 bg-slate-600"}`}
-            />
-          ))}
-        </div>
+        {!isLoading && (
+          <div className="mt-4 flex justify-center gap-2">
+            {showcases.map((item, index) => (
+              <button
+                key={item.title}
+                onClick={() => setActiveShowcase(index)}
+                className={`h-2.5 rounded-full transition-all ${
+                  activeShowcase === index
+                    ? "w-8 bg-violet-400"
+                    : "w-2.5 bg-slate-600"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       <section data-reveal className="reveal-up">
@@ -219,16 +251,22 @@ export default function LandingSections({
           Why Educators Choose Us
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
-          {features.map((feature) => (
-            <article
-              key={feature.title}
-              className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10"
-            >
-              <feature.icon className="mb-3 text-xl text-violet-300" />
-              <h3 className="mb-3 text-xl font-semibold">{feature.title}</h3>
-              <p className="text-slate-300">{feature.description}</p>
-            </article>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            features.map((feature) => (
+              <article
+                key={feature.title}
+                className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10"
+              >
+                {feature.icon && (
+                  <feature.icon className="mb-3 text-xl text-violet-300" />
+                )}
+                <h3 className="mb-3 text-xl font-semibold">{feature.title}</h3>
+                <p className="text-slate-300">{feature.description}</p>
+              </article>
+            ))
+          )}
         </div>
       </section>
 
@@ -247,8 +285,9 @@ export default function LandingSections({
                   (prev) => (prev - 1 + previews.length) % previews.length,
                 )
               }
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400 disabled:opacity-50"
               aria-label="Previous preview"
+              disabled={isLoading}
             >
               <FaArrowLeft />
             </button>
@@ -256,43 +295,54 @@ export default function LandingSections({
               onClick={() =>
                 setActivePreview((prev) => (prev + 1) % previews.length)
               }
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 text-sm transition hover:border-violet-400 disabled:opacity-50"
               aria-label="Next preview"
+              disabled={isLoading}
             >
               <FaArrowRight />
             </button>
           </div>
         </div>
 
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${activePreview * 100}%)` }}
-          >
-            {previews.map((item) => (
-              <article
-                key={item.author}
-                className="min-w-full rounded-xl border border-slate-800 bg-slate-950/50 p-8"
-              >
-                <p className="mb-6 text-xl leading-relaxed text-slate-200">
-                  "{item.quote}"
-                </p>
-                <p className="font-medium text-violet-300">{item.author}</p>
-                <p className="text-sm text-slate-400">{item.role}</p>
-              </article>
-            ))}
-          </div>
+        <div className="overflow-hidden min-h-[200px]">
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            <div
+              className="flex transition-transform duration-700 ease-out"
+              style={{ transform: `translateX(-${activePreview * 100}%)` }}
+            >
+              {previews.map((item) => (
+                <article
+                  key={item.author}
+                  className="min-w-full rounded-xl border border-slate-800 bg-slate-950/50 p-8"
+                >
+                  <p className="mb-6 text-xl leading-relaxed text-slate-200">
+                    "{item.quote}"
+                  </p>
+                  <p className="font-medium text-violet-300">{item.author}</p>
+                  <p className="text-sm text-slate-400">{item.role}</p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="mt-4 flex justify-center gap-2">
-          {previews.map((item, index) => (
-            <button
-              key={item.author}
-              onClick={() => setActivePreview(index)}
-              className={`h-2.5 rounded-full transition-all ${activePreview === index ? "w-8 bg-violet-400" : "w-2.5 bg-slate-600"}`}
-            />
-          ))}
-        </div>
+        {!isLoading && (
+          <div className="mt-4 flex justify-center gap-2">
+            {previews.map((item, index) => (
+              <button
+                key={item.author}
+                onClick={() => setActivePreview(index)}
+                className={`h-2.5 rounded-full transition-all ${
+                  activePreview === index
+                    ? "w-8 bg-violet-400"
+                    : "w-2.5 bg-slate-600"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       <section
@@ -303,15 +353,21 @@ export default function LandingSections({
           Built to Integrate with Your Tools
         </h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {integrations.map((item) => (
-            <div
-              key={item.name}
-              className="rounded-lg border border-slate-800 bg-slate-950/50 px-4 py-3 text-center text-sm font-medium text-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-400/40"
-            >
-              <item.icon className="mx-auto mb-2 text-base text-violet-300" />
-              {item.name}
-            </div>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            integrations.map((item) => (
+              <div
+                key={item.name}
+                className="rounded-lg border border-slate-800 bg-slate-950/50 px-4 py-3 text-center text-sm font-medium text-slate-200 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-400/40"
+              >
+                {item.icon && (
+                  <item.icon className="mx-auto mb-2 text-base text-violet-300" />
+                )}
+                {item.name}
+              </div>
+            ))
+          )}
         </div>
       </section>
 
@@ -327,13 +383,17 @@ export default function LandingSections({
           <div className="mx-auto rounded-lg border border-slate-700 p-1 text-sm md:mx-0">
             <button
               onClick={() => setAnnualBilling(false)}
-              className={`rounded-md px-4 py-2 transition-all duration-300 ${!annualBilling ? "bg-slate-600 text-white" : "text-slate-400"}`}
+              className={`rounded-md px-4 py-2 transition-all duration-300 ${
+                !annualBilling ? "bg-slate-600 text-white" : "text-slate-400"
+              }`}
             >
               Monthly
             </button>
             <button
               onClick={() => setAnnualBilling(true)}
-              className={`rounded-md px-4 py-2 transition-all duration-300 ${annualBilling ? "bg-slate-600 text-white" : "text-slate-400"}`}
+              className={`rounded-md px-4 py-2 transition-all duration-300 ${
+                annualBilling ? "bg-slate-600 text-white" : "text-slate-400"
+              }`}
             >
               Annual
             </button>
@@ -341,32 +401,40 @@ export default function LandingSections({
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {pricing.map((plan) => (
-            <article
-              key={plan.tier}
-              className={`rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${plan.popular ? "border-violet-400 bg-violet-400/10 shadow-lg shadow-violet-500/20" : "border-slate-800 bg-slate-950/50 hover:border-violet-400/40 hover:shadow-violet-500/10"}`}
-            >
-              <p className="mb-2 text-sm text-slate-400">{plan.tier}</p>
-              <p className="mb-3 text-3xl font-bold transition-all duration-300">
-                {annualBilling ? plan.annual : plan.monthly}
-                {plan.monthly !== "Custom" && (
-                  <span className="text-sm text-slate-400">/mo</span>
-                )}
-              </p>
-              <p className="mb-4 text-slate-300">{plan.description}</p>
-              <ul className="mb-6 space-y-2 text-sm text-slate-300">
-                {plan.features.map((item) => (
-                  <li key={item} className="flex items-center gap-2">
-                    <FaCheckCircle className="mt-0.5 text-violet-300" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <button className="w-full rounded-lg border border-slate-600 px-4 py-2 font-medium transition hover:border-violet-400 hover:text-violet-300">
-                Get Started
-              </button>
-            </article>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            pricing.map((plan) => (
+              <article
+                key={plan.tier}
+                className={`rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                  plan.popular
+                    ? "border-violet-400 bg-violet-400/10 shadow-lg shadow-violet-500/20"
+                    : "border-slate-800 bg-slate-950/50 hover:border-violet-400/40 hover:shadow-violet-500/10"
+                }`}
+              >
+                <p className="mb-2 text-sm text-slate-400">{plan.tier}</p>
+                <p className="mb-3 text-3xl font-bold transition-all duration-300">
+                  {annualBilling ? plan.annual : plan.monthly}
+                  {plan.monthly !== "Custom" && (
+                    <span className="text-sm text-slate-400">/mo</span>
+                  )}
+                </p>
+                <p className="mb-4 text-slate-300">{plan.description}</p>
+                <ul className="mb-6 space-y-2 text-sm text-slate-300">
+                  {plan.features.map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <FaCheckCircle className="mt-0.5 text-violet-300" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full rounded-lg border border-slate-600 px-4 py-2 font-medium transition hover:border-violet-400 hover:text-violet-300">
+                  Get Started
+                </button>
+              </article>
+            ))
+          )}
         </div>
       </section>
 
@@ -387,15 +455,19 @@ export default function LandingSections({
         </div>
 
         <div className="space-y-4">
-          {team.map((member) => (
-            <div
-              key={member.name}
-              className="rounded-lg border border-slate-700 bg-slate-950/50 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40"
-            >
-              <p className="font-medium">{member.name}</p>
-              <p className="text-sm text-slate-400">{member.role}</p>
-            </div>
-          ))}
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            team.map((member) => (
+              <div
+                key={member.name}
+                className="rounded-lg border border-slate-700 bg-slate-950/50 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40"
+              >
+                <p className="font-medium">{member.name}</p>
+                <p className="text-sm text-slate-400">{member.role}</p>
+              </div>
+            ))
+          )}
         </div>
       </section>
 
@@ -408,35 +480,44 @@ export default function LandingSections({
           Frequently Asked Questions
         </h2>
         <div className="space-y-3">
-          {faqs.map((item, index) => {
-            const isOpen = openFaq === index;
-            return (
-              <div
-                key={item.q}
-                className="rounded-lg border border-slate-700 bg-slate-950/40 transition-colors duration-300 hover:border-violet-400/40"
-              >
-                <button
-                  onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                  className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors duration-300 hover:text-violet-200"
-                >
-                  <span className="font-medium">{item.q}</span>
-                  <span
-                    className={`text-violet-400 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                  >
-                    +
-                  </span>
-                </button>
+          {isLoading ? (
+            <SkeletonSpinner />
+          ) : (
+            faqs.map((item, index) => {
+              const isOpen = openFaq === index;
+              return (
                 <div
-                  className={`faq-content px-4 text-slate-300 ${isOpen ? "faq-open pb-4" : ""}`}
+                  key={item.q}
+                  className="rounded-lg border border-slate-700 bg-slate-950/40 transition-colors duration-300 hover:border-violet-400/40"
                 >
-                  <p>{item.a}</p>
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                    className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors duration-300 hover:text-violet-200"
+                  >
+                    <span className="font-medium">{item.q}</span>
+                    <span
+                      className={`text-violet-400 transition-transform duration-300 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    >
+                      +
+                    </span>
+                  </button>
+                  <div
+                    className={`faq-content px-4 text-slate-300 ${
+                      isOpen ? "faq-open pb-4" : ""
+                    }`}
+                  >
+                    <p>{item.a}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </section>
 
+      {/* Static Call to action section, always renders immediately */}
       <section
         data-reveal
         className="reveal-up rounded-2xl border border-violet-400/30 bg-violet-500/10 p-8 text-center"
