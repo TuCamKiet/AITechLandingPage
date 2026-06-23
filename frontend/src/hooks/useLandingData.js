@@ -65,13 +65,12 @@ export const useLandingData = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setIsLoading(false);  
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-   
   return { data, isLoading };
 };
