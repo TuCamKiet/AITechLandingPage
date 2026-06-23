@@ -1,10 +1,8 @@
 # RUN SEPARATELY WITH "python -m app.database.seed"
 
-
-
 from app.database.database import Base, engine, SessionLocal
 
-from app.models.landing_model.workflowstep_model import WorkflowStep
+from app.models.landing_model.teammember_model import TeamMember
 
 print("Creating tables...")
 
@@ -14,30 +12,27 @@ print("Tables created successfully.")
 
 db = SessionLocal()
 
-workflow_steps = [
+team_members = [
     {
-        "step": "01",
-        "title": "Curriculum Ingestion",
-        "detail": "Upload your existing syllabus, textbooks, and past exams. Our AI securely learns your specific course material and teaching style."
+        "name": "Reza MK",
+        "role": "CEO & Former Educator"
     },
     {
-        "step": "02",
-        "title": "Deploy Your Custom Tutor",
-        "detail": "Launch an AI teaching assistant directly to your students. It answers questions strictly based on your approved curriculum."
+        "name": "Morteza P",
+        "role": "CTO & AITeach Architect"
     },
     {
-        "step": "03",
-        "title": "Learn, Adapt, & Improve",
-        "detail": "As students interact, the platform identifies common stumbling blocks and suggests curriculum improvements to the educator."
+        "name": "Soheil MV",
+        "role": "Head of Curriculum Design"
     }
 ]
 
 db.add_all([
-    WorkflowStep(**item)
-    for item in workflow_steps
+    TeamMember(**item)
+    for item in team_members
 ])
 
 db.commit()
 db.close()
 
-print("✅ WorkflowStep seed completed")
+print("✅ TeamMember seed completed")

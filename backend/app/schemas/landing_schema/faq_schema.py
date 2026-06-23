@@ -1,4 +1,22 @@
 from pydantic import BaseModel
-class FAQ(BaseModel):
+
+
+class FAQBase(BaseModel):
     q: str
     a: str
+
+
+class FAQCreate(FAQBase):
+    pass
+
+
+class FAQUpdate(FAQBase):
+    pass
+
+
+class FAQResponse(FAQBase):
+    id: int
+
+    model_config = {
+        "from_attributes": True
+    }
